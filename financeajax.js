@@ -20,7 +20,7 @@ function checkName(str) {
   };
   
   // run a JQuery request against the check function in application.py
-  ajax.open("GET", "/check?username=" + str, true);
+  ajax.open("GET", "check?username=" + str, true);
   ajax.send();
 
 }

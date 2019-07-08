@@ -136,15 +136,18 @@ def check():
     
     username=request.args.get('username')
     
+    # Ensure username is at least 1 character long
+    if len(username) < 1:
+        return jsonify(False)
+    
     # Query database for username
     rows = db.execute("SELECT * FROM users WHERE username = :username", username=username)
 
-    # Ensure username exists and password is correct
-    if len(rows) != 1:
-        return jsonify(True)
+    # Ensure that username does not exist
+    if rows:
+        return jsonify(False)
     
-    return jsonify(False)
-
+    return jsonify(True)
 
 @app.route("/history")
 @login_required

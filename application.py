@@ -132,12 +132,13 @@ def buy():
 
 
 @app.route("/check", methods=["GET"])
-def check(username):
-    """Return true if username available, else false, in JSON format"""
+def check():
+    
+    username=request.args.get('username')
     
     # Query database for username
     rows = db.execute("SELECT * FROM users WHERE username = :username", username=username)
-                      
+
     # Ensure username exists and password is correct
     if len(rows) != 1:
         return jsonify(True)

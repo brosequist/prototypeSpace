@@ -1,21 +1,26 @@
-$(function checkName()
-{
-  // create new AJAX object
-  var ajax = new XMLHttpRequest();
+function checkName(str) {
   
-  ajax.onreadystatechange = function() {
-  if (aj.readyState == 4 && aj.status == 200) {
-        $('#usernamecheck').html(ajax.responseText);
-  };
-    
-  ajax.open("GET", username + '.html', true);
-  ajax.send();
-  ajax.get();
 
-  $('buttonnamehere').bind('click', function() {
-    $.getJSON('/check',function(data) {
-      //do nothing
-    });
-    
-  });
-});
+  var ajax;
+  
+  // don't do anything if the string is zero characters
+  if (str.length == 0) {
+    document.getElementByID("namecheck").innerHTML = ""
+    return;
+  }
+
+  // create new AJAX object
+  ajax = new XMLHttpRequest();
+  
+  // run a get for name check info when readystatechange occurs
+  ajax.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      document.getElementByID("namecheck").innerHTML = this.responseText;
+    }
+  };
+  
+  // run a JQuery request against the check function in application.py
+  ajax.open("GET", "/check?username=" + str, true);
+  ajax.send();
+
+}
